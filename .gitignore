@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Editors / IDE
+.vscode/
+.idea/
+
+# Logs / caches
+.cache/
+*.log
+
+# Local environment
+.env
+
+# Local data / generated runtime folders
+sqlite3/
+playwright/
+docs/pdfs/
+files/http_responses/
+
+# Local backups / temporary artifacts
+.dgy_backup/

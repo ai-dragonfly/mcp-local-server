@@ -1,0 +1,39 @@
+
+{
+  "type": "function",
+  "function": {
+    "name": "office_to_pdf",
+    "displayName": "Office to PDF Converter",
+    "category": "documents",
+    "description": "Convert Microsoft Office documents (Word, PowerPoint) to PDF using either the Office suite installed on the laptop (via docx2pdf) or a headless LibreOffice CLI (no GUI). Supports .docx, .doc, .pptx, .ppt. When Microsoft Office/docx2pdf is unavailable or unsuitable (e.g., PPT on Linux), the tool attempts a headless fallback with LibreOffice if installed. You can force headless mode by setting the environment variable OFFICE_TO_PDF_ENGINE=libreoffice or by passing the 'engine' parameter. Clear errors are returned when neither engine is available. Input must be under docs/office/, output is written to docs/pdfs/.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": ["convert", "get_info"],
+          "description": "Operation to perform: convert (convert Office file to PDF) or get_info (get file metadata without converting)"
+        },
+        "input_path": {
+          "type": "string",
+          "description": "Path to input Office file (required for 'convert' and 'get_info' operations). Relative to project root, must be under docs/office/. Supports: .docx, .doc (Word), .pptx, .ppt (PowerPoint). Examples: 'docs/office/report.docx', 'docs/office/presentation.pptx'"
+        },
+        "output_path": {
+          "type": "string",
+          "description": "Path to output PDF file (optional for 'convert' operation). If not provided, automatically generates name based on input (e.g., 'report.docx' → 'report.pdf'). Output goes to docs/pdfs/. Example: 'docs/pdfs/report.pdf'"
+        },
+        "overwrite": {
+          "type": "boolean",
+          "description": "Whether to overwrite existing PDF file (default: false). If false and file exists, adds suffix '_1', '_2', etc."
+        },
+        "engine": {
+          "type": "string",
+          "enum": ["auto", "docx2pdf", "libreoffice"],
+          "description": "Engine selection for conversion (convert op only). 'auto' (default) tries docx2pdf first then falls back to LibreOffice; 'docx2pdf' forces Microsoft Office/docx2pdf; 'libreoffice' forces headless CLI (no GUI)."
+        }
+      },
+      "required": ["operation", "input_path"],
+      "additionalProperties": false
+    }
+  }
+}

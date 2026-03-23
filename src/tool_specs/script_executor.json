@@ -1,0 +1,38 @@
+{
+  "type": "function",
+  "function": {
+    "name": "script_executor",
+    "displayName": "Python Sandbox",
+    "category": "development",
+    "description": "Exécute du code Python dans un sandbox sécurisé avec accès à des tools MCP. Pas d'imports, API limitée, timeout configurable.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "script": {
+          "type": "string",
+          "description": "Code Python à exécuter (obligatoire)"
+        },
+        "variables": {
+          "type": "object",
+          "description": "Variables à injecter dans le contexte d'exécution (dict)",
+          "additionalProperties": true
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "Timeout en secondes (default: 60, min: 1, max: 300)",
+          "minimum": 1,
+          "maximum": 300
+        },
+        "allowed_tools": {
+          "type": "array",
+          "description": "Liste des noms d'outils MCP autorisés (whitelist). Si omis, tous les outils sont autorisés.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["script"],
+      "additionalProperties": false
+    }
+  }
+}

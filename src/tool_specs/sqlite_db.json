@@ -1,0 +1,67 @@
+{
+  "type": "function",
+  "function": {
+    "name": "sqlite_db",
+    "displayName": "SQLite Database",
+    "category": "data",
+    "tags": ["sqlite", "database", "sql", "local_storage"],
+    "description": "Gestion d'une base SQLite locale dans <projet>/sqlite3. Créer, lister, supprimer des DB et exécuter des requêtes SQL.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": ["ensure_dir", "list_dbs", "create_db", "delete_db", "get_tables", "describe", "execute", "exec", "query", "executescript"],
+          "description": "Type d'opération SQLite"
+        },
+        "db": {
+          "type": "string",
+          "description": "Nom de la base (avec ou sans .db) pour les opérations sur données"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nom de la base (avec ou sans .db) pour create_db/delete_db"
+        },
+        "schema": {
+          "type": "string",
+          "description": "Script SQL d'initialisation (optionnel pour create_db)"
+        },
+        "table": {
+          "type": "string",
+          "description": "Nom de table pour describe"
+        },
+        "query": {
+          "type": "string",
+          "description": "Requête SQL pour execute/exec/query (max 50KB)",
+          "maxLength": 51200
+        },
+        "params": {
+          "description": "Paramètres SQL (dict/list/tuple ou liste de jeux quand many=True)"
+        },
+        "many": {
+          "type": "boolean",
+          "default": false,
+          "description": "Utiliser executemany avec params comme liste (default: false)"
+        },
+        "return_rows": {
+          "type": "boolean",
+          "description": "Forcer le retour des lignes (default: auto pour SELECT)"
+        },
+        "script": {
+          "type": "string",
+          "description": "Script SQL multi-instructions pour executescript (max 50KB)",
+          "maxLength": 51200
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Limite de lignes retournées pour SELECT (default: 100, max: 1000). Ajoutez LIMIT à votre query pour contrôler précisément, sinon truncation automatique.",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 100
+        }
+      },
+      "required": ["operation"],
+      "additionalProperties": false
+    }
+  }
+}
