@@ -21,7 +21,7 @@ It keeps a selected set of tools **iso-functionally**, while removing unrelated 
 
 ## Included tools
 
-This repository includes the following tools:
+This repository includes 26 packaged tools, including:
 
 - academic_research_super
 - aviation_weather
@@ -58,6 +58,23 @@ For the generated tools catalog, see:
 
 ---
 
+## Requirements
+
+- Python **3.10+** required
+- Python **3.11 recommended**
+- macOS, Linux, or Windows
+
+Some tools may require additional local software or machine-specific setup.
+
+Examples:
+- `playwright` may require browser installation
+- `office_to_pdf` may depend on local Office or LibreOffice availability
+- `stockfish_auto` may require a local Stockfish binary
+- `minecraft_control` requires access to a compatible RCON-enabled Minecraft server
+- tools using external services may require credentials in `.env`
+
+---
+
 ## Quickstart
 
 ### 1. Clone the repository
@@ -71,7 +88,7 @@ cd mcp-local-server
 
 #### macOS / Linux
 ```bash
-python3 -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
 ```
 
@@ -80,6 +97,8 @@ source .venv/bin/activate
 python -m venv .venv
 .venv\\Scripts\\Activate.ps1
 ```
+
+> If `python3.11` is not available on your machine, use any Python 3.10+ interpreter.
 
 ### 3. Install dependencies
 
@@ -113,6 +132,21 @@ Or run directly:
 ```bash
 python src/server.py
 ```
+
+---
+
+## First-run validation
+
+After startup, perform a quick health check:
+
+```bash
+curl http://127.0.0.1:8000/tools
+```
+
+You can also open:
+
+- Control panel: `http://127.0.0.1:8000/control`
+- Tools registry: `http://127.0.0.1:8000/tools`
 
 ---
 
