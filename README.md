@@ -6,35 +6,46 @@
 
 Public local MCP server with a packaged toolset and a web control panel.
 
-This repository provides a clean, local-first server designed to run on:
+This repository provides a clean, local-first server designed to run on your machine with:
+
+- a dedicated Python virtual environment
+- a local `.env` configuration file
+- a web control panel
+- a packaged set of validated local tools
+
+By default, the recommended local endpoint is:
 
 - `http://127.0.0.1:8000`
-- a dedicated Python virtual environment
-- a simple `.env` configuration
-- a web control panel for browsing and testing tools
+
+---
 
 ## What this project is
 
-This project is a packaged local MCP server extracted and cleaned from a larger codebase, with a focused public-safe structure.
+This project is a public-ready local MCP server extracted and cleaned from a larger internal codebase.
 
-It keeps a selected set of tools **iso-functionally**, while removing unrelated legacy internal layers from the public distribution.
+The repository now focuses on a stable public toolset and a simple local execution model.
+
+It is intended to help users:
+
+- install a local MCP server cleanly
+- start it
+- restart it after configuration changes
+- browse and test tools through a local control panel
+
+---
 
 ## Included tools
 
-This repository includes 26 packaged tools, including:
+The current public toolset contains **20 tools**:
 
-- academic_research_super
 - aviation_weather
 - date
 - dev_navigator
 - excel_to_sqlite
-- ffmpeg_frames
 - flight_tracker
 - http_client
 - lichess
 - math
-- minecraft_control
-- news_aggregator
 - office_to_pdf
 - open_meteo
 - pdf2text
@@ -45,8 +56,6 @@ This repository includes 26 packaged tools, including:
 - shell
 - ship_tracker
 - sqlite_db
-- stockfish_auto
-- tool_audit
 - universal_doc_scraper
 - velib
 
@@ -54,7 +63,7 @@ For the generated tools catalog, see:
 
 - `src/tools/README.md`
 
-> This file is auto-generated from the tool specs. Do not edit it manually.
+> `src/tools/README.md` is auto-generated from the tool specs. Do not edit it manually.
 
 ---
 
@@ -64,13 +73,13 @@ For the generated tools catalog, see:
 - Python **3.11 recommended**
 - macOS, Linux, or Windows
 
-Some tools may require additional local software or machine-specific setup.
+Some tools require additional local software or external credentials.
 
 Examples:
+
 - `playwright` may require browser installation
 - `office_to_pdf` may depend on local Office or LibreOffice availability
-- `stockfish_auto` may require a local Stockfish binary
-- `minecraft_control` requires access to a compatible RCON-enabled Minecraft server
+- `ship_tracker` requires an AISStream API key
 - tools using external services may require credentials in `.env`
 
 ---
@@ -95,7 +104,7 @@ source .venv/bin/activate
 #### Windows PowerShell
 ```powershell
 python -m venv .venv
-.venv\\Scripts\\Activate.ps1
+.venv\Scripts\Activate.ps1
 ```
 
 > If `python3.11` is not available on your machine, use any Python 3.10+ interpreter.
@@ -113,7 +122,7 @@ pip install -e .
 cp .env.example .env
 ```
 
-Then edit `.env` only if you need to configure specific tools or credentials.
+Then edit `.env` only if needed.
 
 ### 5. Start the server
 
@@ -137,7 +146,7 @@ python src/server.py
 
 ## First-run validation
 
-After startup, perform a quick health check:
+After startup, validate that the server responds correctly:
 
 ```bash
 curl http://127.0.0.1:8000/tools
@@ -164,6 +173,9 @@ Once started, the server is available at:
 
 If you change code, specs, or environment settings, stop the process and start it again.
 
+### Important
+If you modify `.env`, you must restart the server before testing again.
+
 Standard restart flow:
 
 ```bash
@@ -173,13 +185,15 @@ source .venv/bin/activate
 python src/server.py
 ```
 
-If you use the dev scripts, re-run them the same way as the first start.
+If you use the provided dev scripts, re-run them the same way as the first start.
 
 ---
 
 ## Calling a tool
 
-Tools are executed through the `/execute` endpoint with a JSON payload:
+Tools are executed through the `/execute` endpoint with a JSON payload.
+
+Example:
 
 ```json
 {
@@ -255,6 +269,33 @@ python3 scripts/generate_tools_catalog.py
 
 ---
 
+## Tool-specific notes
+
+### `ship_tracker`
+This tool requires an AISStream API key.
+
+To use it, define in `.env`:
+
+```dotenv
+AISSTREAM_API_KEY=...
+```
+
+### `office_to_pdf`
+This tool expects files under:
+
+```text
+docs/office/
+```
+
+### `pdf_download`
+Downloaded PDFs are stored under:
+
+```text
+docs/pdfs/
+```
+
+---
+
 ## Project structure
 
 ```text
@@ -298,8 +339,8 @@ Do not commit your `.env` file.
 ## Notes
 
 - This project is designed for local use.
-- Some tools require optional local software or external credentials.
 - Tool availability may depend on your machine configuration.
+- Some tools require optional local software or external credentials.
 - Review `.env.example` before using tools that depend on external services.
 
 ---
