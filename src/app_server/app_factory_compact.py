@@ -21,9 +21,20 @@ from .tools_routes import ExecuteRequest, head_tools, get_tools, post_debug, pos
 
 logger = logging.getLogger(__name__)
 
+
+def _get_int_env(name: str, default: int) -> int:
+    raw = (os.getenv(name, '') or '').strip()
+    if raw == '':
+        return default
+    try:
+        return int(raw)
+    except Exception:
+        return default
+
+
 MCP_HOST = os.getenv('MCP_HOST', '127.0.0.1')
-MCP_PORT = int(os.getenv('MCP_PORT', '8000'))
-EXECUTE_TIMEOUT_SEC = int(os.getenv('EXECUTE_TIMEOUT_SEC', '180'))
+MCP_PORT = _get_int_env('MCP_PORT', 8000)
+EXECUTE_TIMEOUT_SEC = _get_int_env('EXECUTE_TIMEOUT_SEC', 180)
 RELOAD_ENV = os.getenv('RELOAD', '').strip() == '1'
 AUTO_RELOAD_TOOLS = os.getenv('AUTO_RELOAD_TOOLS', '1').strip() == '1'
 

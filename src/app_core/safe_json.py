@@ -9,15 +9,26 @@ from fastapi.responses import JSONResponse
 
 LOG = logging.getLogger(__name__)
 
+
+def _get_int_env(name: str, default: int) -> int:
+    raw = (os.getenv(name, '') or '').strip()
+    if raw == '':
+        return default
+    try:
+        return int(raw)
+    except Exception:
+        return default
+
+
 # Env-configurable knobs
 BIGINT_AS_STRING = os.getenv('BIGINT_AS_STRING', '1').strip().lower() in ('1','true','yes','on')
-BIGINT_STR_THRESHOLD = int(os.getenv('BIGINT_STR_THRESHOLD', '1000'))
+BIGINT_STR_THRESHOLD = _get_int_env('BIGINT_STR_THRESHOLD', 1000)
 
 # Lift Python 3.11+ safety cap for int->str to support very large factorials
 try:
     if hasattr(sys, 'set_int_max_str_digits'):
-        val = os.getenv('PY_INT_MAX_STR_DIGITS', '0').strip()  # 0 = unlimited
-        sys.set_int_max_str_digits(0 if val == '' else int(val))
+        val = _get_int_env('PY_INT_MAX_STR_DIGITS', 0)  # 0 = unlimited
+        sys.set_int_max_str_digits(val)
         LOG.info(f"int->str max digits set to {val or 'unlimited'}")
 except Exception as e:
     LOG.warning(f"Could not set int max str digits: {e}")

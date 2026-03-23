@@ -17,6 +17,17 @@ from .security import validate_script_security
 from .tools_proxy import ToolsProxy
 
 
+def _get_int_env(name: str, default: int) -> int:
+    raw = (os.getenv(name, '') or '').strip()
+    if raw == '':
+        return default
+    try:
+        return int(raw)
+    except Exception:
+        return default
+
+
+
 class ScriptExecutor:
     """Execute scripts that can call other MCP tools"""
     
@@ -33,11 +44,11 @@ class ScriptExecutor:
         if default_timeout is not None:
             self.timeout = int(default_timeout)
         else:
-            self.timeout = int(os.getenv('SCRIPT_TIMEOUT_SEC', os.getenv('EXECUTE_TIMEOUT_SEC', '180')))
+            self.timeout = _get_int_env('SCRIPT_TIMEOUT_SEC', _get_int_env('EXECUTE_TIMEOUT_SEC', 180))
         self.max_tool_calls = (
             int(max_tool_calls)
             if max_tool_calls is not None
-            else int(os.getenv('MAX_TOOL_CALLS_PER_SCRIPT', '50'))
+            else _get_int_env('MAX_TOOL_CALLS_PER_SCRIPT', 50)
         )
         self.call_count = 0
         # Optional whitelist of allowed tools
@@ -84,7 +95,7 @@ class ScriptExecutor:
             params = {}
         
         # Align tool call timeout with server EXECUTE_TIMEOUT_SEC (fallback 180)
-        EXECUTE_TIMEOUT_SEC = int(os.getenv('EXECUTE_TIMEOUT_SEC', '180'))
+        EXECUTE_TIMEOUT_SEC = _get_int_env('EXECUTE_TIMEOUT_SEC', 180)
         
         try:
             response = requests.post(

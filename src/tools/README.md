@@ -2,19 +2,9 @@
 
 Ce fichier est généré automatiquement par `scripts/generate_tools_catalog.py`. Ne pas éditer à la main.
 
-Total tools: 26
+Total tools: 20
 
-## 📊 Intelligence & Orchestration (2)
-
-- News Aggregator — Agrégateur d'actualités multi-sources (NewsAPI free tier limité, NYT, Guardian). IMPORTANT: NewsAPI free tier supporte UNIQUEMENT 'top_he… · Tags: external_sources, knowledge, search
-  - Opérations: search_news, top_headlines, list_sources
-  - Tokens: aucun
-
-- Research — Recherche académique multi-sources (PubMed, arXiv, HAL, CrossRef). · Tags: knowledge, research, external_sources
-  - Opérations: search_papers, get_paper_details, search_authors, get_citations
-  - Tokens: aucun
-
-## 🔧 Development (5)
+## 🔧 Development (4)
 
 - Dev Navigator — Couteau suisse LLM pour explorer un dépôt: overview, tree, search, outline, open (plan fs_requests uniquement — pas de contenu), endpoint… · Tags: knowledge
   - Opérations: compose, overview, tree, search, outline, open …
@@ -30,10 +20,6 @@ Total tools: 26
 
 - Shell Command — Execute shell commands (bash/sh). Useful for running scripts, tests, git commands, file operations. Supports piping, redirections, and wo… · Tags: shell, bash, command, exec, system
   - Opérations: N/A
-  - Tokens: aucun
-
-- Tool Audit — Audit lecture-seule d’un tool MCP: périmètre strict au tool, contexte complet pour LLM, multi-profils (perf, quality, maintain, invariant… · Tags: quality, performance, maintainability
-  - Opérations: audit_tool
   - Tokens: aucun
 
 ## 🗄️ Data & Storage (2)
@@ -66,12 +52,6 @@ Total tools: 26
 
 - PDF to Text — Extraction de texte depuis un PDF pour des pages données. Entrée: path (string), pages (string optionnelle) — Sortie: texte concaténé et…
   - Opérations: N/A
-  - Tokens: aucun
-
-## 🎬 Media (1)
-
-- FFmpeg Frames — Extraction d'images d'une vidéo: détection automatique des plans (similarité) + début/fin + samples intraplans.
-  - Opérations: extract_frames
   - Tokens: aucun
 
 ## ✈️ Transportation (4)
@@ -112,16 +92,8 @@ Total tools: 26
   - Opérations: current_weather, forecast_hourly, forecast_daily, air_quality, geocoding, reverse_geocoding
   - Tokens: aucun
 
-## 🎮 Social & Entertainment (3)
+## 🎮 Social & Entertainment (1)
 
 - Lichess (Public API) — Accès en lecture seule aux endpoints publics de Lichess: profils, perfs, équipes, parties, tournois, leaderboards, puzzles. Sans authenti… · Tags: chess, lichess, public_api
   - Opérations: get_user_profile, get_user_perfs, get_user_teams, get_user_current_game, get_user_games, get_team_details …
-  - Tokens: aucun
-
-- Minecraft Control — Control Minecraft server via RCON: execute commands, spawn entities, build structures, import 3D models, control player, manage environment. · Tags: gaming, 3d, scripting, rcon
-  - Opérations: execute_command, spawn_entities, build_structure, import_3d_model, control_player, set_environment …
-  - Tokens: aucun
-
-- Stockfish (Auto-75) — Évalue une position ou analyse une partie avec Stockfish en autoconfigurant ~75% des ressources (Threads/Hash). Pour analyze_game, un bud… · Tags: chess, uci, auto-tune
-  - Opérations: evaluate_position, analyze_game
   - Tokens: aucun
